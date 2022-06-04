@@ -24,7 +24,7 @@ import tensorflow.keras.models as KM
 
 from mrcnn import utils
 import sys
-from parallel_model import ParallelModel
+from mrcnn.parallel_model import ParallelModel
 
 # Requires TensorFlow 2.0+
 from distutils.version import LooseVersion
