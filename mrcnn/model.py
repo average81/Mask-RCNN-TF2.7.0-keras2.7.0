@@ -1253,7 +1253,7 @@ def load_image_gt(dataset, config, image_id, augmentation=None):
         # test your augmentation on masks
         MASK_AUGMENTERS = ["Sequential", "SomeOf", "OneOf", "Sometimes",
                            "Fliplr", "Flipud", "CropAndPad",
-                           "Affine", "PiecewiseAffine"]
+                           "Affine", "PiecewiseAffine", "Rotate"]
 
         def hook(images, augmenter, parents, default):
             """Determines which augmenters to apply to masks."""
@@ -1267,7 +1267,7 @@ def load_image_gt(dataset, config, image_id, augmentation=None):
         det = augmentation.to_deterministic()
         image = det.augment_image(image)
         # Change mask to np.uint8 because imgaug doesn't support np.bool
-        mask = det.augment_images(mask.astype(np.uint8),
+        mask = det.augment_image(mask.astype(np.uint8),
                                  hooks=imgaug.HooksImages(activator=hook))
         # Verify that shapes didn't change
         assert image.shape == image_shape, "Augmentation shouldn't change image size"
